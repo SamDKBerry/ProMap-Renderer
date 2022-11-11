@@ -1,7 +1,7 @@
 import { createCanvas } from 'canvas';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
-import { MapData } from '../../interfaces/mapData.interface';
-import { RenderTriangle } from '../../interfaces/mapRender.interface';
+import { Brush, MapData } from '../../interfaces/mapData.interface';
+import { Coordinate, RenderTriangle } from '../../interfaces/mapRender.interface';
 
 const worldSpaceToPixelScale = 4;
 
@@ -34,19 +34,7 @@ const trianglesToRender = (mapData: MapData): RenderTriangle[] => {
   const trisToRender: RenderTriangle[] = [];
 
   mapData.Brushes.forEach((Brush) => {
-    if (mapData.Materials[Brush.material].startsWith('Skybox/')) {
-      return;
-    }
-    if (mapData.Materials[Brush.material] === 'Shadow') {
-      return;
-    }
-    if (mapData.Materials[Brush.material] === 'AIVisBlocker') {
-      return;
-    }
-    if (mapData.Materials[Brush.material] === 'PlayerClip') {
-      return;
-    }
-    if (Brush.mapDraw === 'False') {
+    if (!shouldRenderBrush(Brush, mapData.Materials)) {
       return;
     }
 
@@ -54,13 +42,17 @@ const trianglesToRender = (mapData: MapData): RenderTriangle[] => {
       const tris = splitTris(face.tris);
       const verts = splitVerts(face.verts);
       tris.forEach((tri) => {
+        const coordinates = [
+          { x: verts[tri[0]][0] * worldSpaceToPixelScale, y: verts[tri[0]][2] * worldSpaceToPixelScale },
+          { x: verts[tri[1]][0] * worldSpaceToPixelScale, y: verts[tri[1]][2] * worldSpaceToPixelScale },
+          { x: verts[tri[2]][0] * worldSpaceToPixelScale, y: verts[tri[2]][2] * worldSpaceToPixelScale },
+        ];
+        if (brushFacesDown(coordinates)) {
+          return;
+        }
         trisToRender.push({
           color: mapData.Colors[face.color].value,
-          coordinates: [
-            { x: verts[tri[0]][0] * worldSpaceToPixelScale, y: verts[tri[0]][2] * worldSpaceToPixelScale },
-            { x: verts[tri[1]][0] * worldSpaceToPixelScale, y: verts[tri[1]][2] * worldSpaceToPixelScale },
-            { x: verts[tri[2]][0] * worldSpaceToPixelScale, y: verts[tri[2]][2] * worldSpaceToPixelScale },
-          ],
+          coordinates,
           heighestPoint: HeighestVert(verts),
         });
       });
@@ -68,6 +60,30 @@ const trianglesToRender = (mapData: MapData): RenderTriangle[] => {
   });
 
   return trisToRender;
+};
+
+const shouldRenderBrush = (brush: Brush, materials: string[]): boolean => {
+  if (
+    materials[brush.material].startsWith('Skybox/') ||
+    materials[brush.material] === 'Shadow' ||
+    materials[brush.material] === 'AIVisBlocker' ||
+    materials[brush.material] === 'PlayerClip' ||
+    brush.mapDraw === 'False'
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const brushFacesDown = (tri: Coordinate[]): boolean => {
+  const end = tri.length - 1;
+  let sum = tri[end].x * tri[0].y - tri[0].x * tri[end].y;
+  for (let i = 0; i < end; ++i) {
+    const n = i + 1;
+    sum += tri[i].x * tri[n].y - tri[n].x * tri[i].y;
+  }
+  return sum > 0;
 };
 
 const splitTris = (tris: string): number[][] => {
