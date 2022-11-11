@@ -23,7 +23,7 @@ export const renderMap = (mapData: MapData) => {
   trisToRender.sort((a, b) => a.heighestPoint - b.heighestPoint);
 
   trisToRender.forEach((tri) => {
-    drawTriangle(tri, ctx);
+    drawTriangle(tri, ctx, height);
   });
 
   const fileBuffer = canvas.toBuffer('image/png');
@@ -113,12 +113,12 @@ const HeighestVert = (verts: number[][]) => {
   return Math.max.apply(null, zIndexs);
 };
 
-const drawTriangle = (tri: RenderTriangle, ctx: CanvasRenderingContext2D) => {
+const drawTriangle = (tri: RenderTriangle, ctx: CanvasRenderingContext2D, height: number) => {
   ctx.fillStyle = tri.color;
   ctx.beginPath();
-  ctx.moveTo(tri.coordinates[0].x, tri.coordinates[0].y);
-  ctx.lineTo(tri.coordinates[1].x, tri.coordinates[1].y);
-  ctx.lineTo(tri.coordinates[2].x, tri.coordinates[2].y);
+  ctx.moveTo(tri.coordinates[0].x, height - tri.coordinates[0].y);
+  ctx.lineTo(tri.coordinates[1].x, height - tri.coordinates[1].y);
+  ctx.lineTo(tri.coordinates[2].x, height - tri.coordinates[2].y);
   ctx.closePath();
   ctx.fill();
 };

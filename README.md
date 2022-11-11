@@ -2,14 +2,19 @@
 
 Tool to visualise Prodeus levels in 2D.
 
-This is currently very wip, it's able to render a top down view of a Prodeus level by drawing each triangle with it's assigned colour but currently it draws every face regardless of orientation and displays the level flipped vertically. There is also no logic around correctly positioning the level, there's a `centralOffset` value in `renderMap.ts` that needs tweaking on a per level basis to get all of the level in the image.
+This is currently very wip, it's able to render a top down view of a Prodeus level by drawing each triangle with it's assigned colour. There is currently no logic around correctly positioning the level, there's a `centralOffset` value in `renderMap.ts` that needs tweaking on a per level basis to get all of the level in the image.
 
-Rough road map for improvemnts:
+## Rough road map for improvemnts:
 
 - Center levels in the image editor and scale image around them
-- Don't render Faces that point up
-- Don't vertically flip level
-- Look at making tool a bit easier to use
+- Look at making tool a bit more customisable with options to:
+  - Show areas not on automap
+  - change background colour
+  - change resolution
+  - add map and author titles
+  - add grid overlay
+  - show nodes and node links
+- Look at giving the tool a gui: show which levels are available and give render options an interface
 
 ## Install Dependencies
 
