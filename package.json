@@ -30,7 +30,19 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "ignore": [
+          "src",
+          ".editorconfig",
+          ".eslintignore",
+          ".eslintrc.yml",
+          ".gitattributes",
+          ".gitignore",
+          ".prettierrc.yml",
+          "README.md",
+          "tsconfig.json"
+        ]
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
