@@ -11,9 +11,10 @@ enum MapDataSection {
   NODE,
 }
 
-export const parseMap = async (mapId: string) => {
+export const mapData = async (mapId: string) => {
   const absoluteFilePath = `${process.env.APPDATA}/../LocalLow/BoundingBoxSoftware/Prodeus/CloudMaps/${mapId}/map.map`;
   const fileContent = await asyncReadFile(absoluteFilePath);
+  console.log(mapId);
   return fileContentToMapObject(fileContent);
 };
 

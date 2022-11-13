@@ -1,13 +1,26 @@
 {
+  "name": "pro-map-renderer",
+  "version": "0.0.1",
+  "description": "Tool to visualise Prodeus levels in 2D",
+  "author": "Sam Berry",
+  "license": "MIT",
+  "main": "build/electron/index.js",
   "scripts": {
-    "start": "tsc && node build/index.js",
+    "start": "tsc && electron-forge start",
+    "package": "tsc && electron-forge package",
+    "make": "tsc && electron-forge make",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.1",
+    "@electron-forge/maker-deb": "^6.0.1",
+    "@electron-forge/maker-squirrel": "^6.0.1",
+    "@electron-forge/maker-zip": "^6.0.1",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
+    "electron": "^21.2.3",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -15,6 +28,33 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "canvas": "^2.10.2"
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electron_quick_start"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }

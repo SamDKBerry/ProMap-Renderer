@@ -1,33 +1,36 @@
-import { createCanvas } from 'canvas';
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { Brush, MapData } from '../../interfaces/mapData.interface';
 import { Coordinate, RenderTriangle } from '../../interfaces/mapRender.interface';
 
 const worldSpaceToPixelScale = 4;
 
-export const renderMap = (mapData: MapData) => {
+window.onload = function () {
+  renderLevel();
+};
+
+const renderLevel = async () => {
+  const mapId = await window.electronAPI.currentMap();
+  const mapData = await window.electronAPI.mapData(mapId);
+  renderMap(mapData);
+};
+
+const renderMap = (mapData: MapData) => {
   const width = 2500;
   const height = 2500;
-
-  const canvas = createCanvas(width, height);
+  const canvas = document.getElementById('map-canvas') as HTMLCanvasElement;
+  if (!canvas) {
+    return;
+  }
   const ctx = canvas.getContext('2d');
-
+  if (!ctx) {
+    return;
+  }
   ctx.fillStyle = '#878787';
   ctx.fillRect(0, 0, width, height);
-
-  ctx.fillStyle = '#fff';
-  ctx.strokeStyle = '#fff';
-  ctx.lineWidth = 1;
-
   const trisToRender = trianglesToRender(mapData);
   trisToRender.sort((a, b) => a.heighestPoint - b.heighestPoint);
-
   trisToRender.forEach((tri) => {
     drawTriangle(tri, ctx, height);
   });
-
-  const fileBuffer = canvas.toBuffer('image/png');
-  writeFile(fileBuffer, mapData.MapProperties.mapTitle);
 };
 
 const trianglesToRender = (mapData: MapData): RenderTriangle[] => {
@@ -98,14 +101,6 @@ const splitVerts = (verts: string): number[][] => {
   const vertArray = verts.split(';');
   const formatedVerts = vertArray.map((vert) => vert.split(',').map((axis) => parseFloat(axis) + centralOffset));
   return formatedVerts;
-};
-
-const writeFile = (fileBuffer: Buffer, mapName: string) => {
-  const outputDirectory = './output';
-  if (!existsSync(outputDirectory)) {
-    mkdirSync(outputDirectory);
-  }
-  writeFileSync(`${outputDirectory}/${mapName}.png`, fileBuffer);
 };
 
 const HeighestVert = (verts: number[][]) => {
