@@ -8,6 +8,7 @@ declare global {
 
 export interface ElectronAPI {
   getMaps: () => string[];
+  pathToMaps: () => string;
   mapData: (mapId: string) => MapData;
   navigateToMap: (mapId: string) => void;
   currentMap: () => string;

@@ -1,26 +1,29 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, protocol } from 'electron';
 import { navigateToMap } from './navigate';
 import { findCommunityMaps } from './services/fileSystem/findCommunityMaps';
 import { mapData } from './services/parseMap/parseMap';
+import * as url from 'url';
 
 if (require('electron-squirrel-startup')) app.quit();
 
 import * as path from 'path';
+import { pathToMaps } from './services/fileSystem/paths';
 let currentMap = '';
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
+    show: false,
   });
-
+  win.maximize();
+  win.show();
   win.loadFile('./assets/pages/home.html');
 };
 app.whenReady().then(() => {
   ipcMain.handle('maps:findCommunityMaps', findCommunityMaps);
+  ipcMain.handle('maps:path', () => pathToMaps);
   ipcMain.handle('maps:mapData', async (_event, mapId: string) => {
     const data = await mapData(mapId);
     return data;
@@ -31,6 +34,10 @@ app.whenReady().then(() => {
   });
   ipcMain.handle('map:currentMap', () => {
     return currentMap;
+  });
+  protocol.registerFileProtocol('secure-file', (request, callback) => {
+    const filePath = url.fileURLToPath('file://' + request.url.slice('secure-file://'.length));
+    callback(filePath);
   });
   createWindow();
 });

@@ -1,5 +1,6 @@
 const loadMaps = async () => {
   const maps = await window.electronAPI.getMaps();
+  const pathToMaps = await window.electronAPI.pathToMaps();
   const mapContainerElement = document.getElementById('map-container');
   if (!mapContainerElement) {
     return;
@@ -10,6 +11,8 @@ const loadMaps = async () => {
     const button = listElement.appendChild(document.createElement('li')).appendChild(document.createElement(`button`));
     button.textContent = map;
     button.addEventListener('click', () => window.electronAPI.navigateToMap(map));
+    const image = button.appendChild(document.createElement('img')) as HTMLImageElement;
+    image.src = `secure-file://${pathToMaps}/${map}/screenshot.jpg`;
   });
 };
 

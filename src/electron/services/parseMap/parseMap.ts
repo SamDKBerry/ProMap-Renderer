@@ -1,3 +1,4 @@
+import { pathToMaps } from '../fileSystem/paths';
 import { asyncReadFile } from './readFile';
 
 enum MapDataSection {
@@ -12,7 +13,7 @@ enum MapDataSection {
 }
 
 export const mapData = async (mapId: string) => {
-  const absoluteFilePath = `${process.env.APPDATA}/../LocalLow/BoundingBoxSoftware/Prodeus/CloudMaps/${mapId}/map.map`;
+  const absoluteFilePath = `${pathToMaps}/${mapId}/map.map`;
   const fileContent = await asyncReadFile(absoluteFilePath);
   console.log(mapId);
   return fileContentToMapObject(fileContent);
