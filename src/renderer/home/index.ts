@@ -9,7 +9,6 @@ const loadMaps = async () => {
 
   maps.forEach((map) => {
     const button = listElement.appendChild(document.createElement('li')).appendChild(document.createElement(`button`));
-    button.textContent = map;
     button.addEventListener('click', () => window.electronAPI.navigateToMap(map));
     const image = button.appendChild(document.createElement('img')) as HTMLImageElement;
     image.src = `secure-file://${pathToMaps}/${map}/screenshot.jpg`;
