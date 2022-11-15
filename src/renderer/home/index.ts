@@ -5,6 +5,10 @@ const loadMaps = async () => {
   if (!mapContainerElement) {
     return;
   }
+
+  const loadingElement = document.getElementById('loading-message');
+  loadingElement?.remove();
+
   const listElement = mapContainerElement.appendChild(document.createElement('ul'));
 
   maps.forEach((map) => {

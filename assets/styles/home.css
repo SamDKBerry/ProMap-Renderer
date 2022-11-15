@@ -1,3 +1,19 @@
+body {
+  color: #f9fbff;
+  background-color: #343434;
+  font-family: Sans-Serif;
+}
+
+button {
+  border: 0;
+  background: transparent;
+  margin: 5px;
+}
+
+button:hover {
+  transform: scale(1.025);
+}
+
 ul {
   list-style-type: none;
   margin: 0;

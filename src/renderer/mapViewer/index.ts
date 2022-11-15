@@ -9,17 +9,32 @@ window.onload = function () {
 
 const renderLevel = async () => {
   const mapId = await window.electronAPI.currentMap();
-  const mapData = await window.electronAPI.mapData(mapId);
-  renderMap(mapData);
+  try {
+    const mapData = await window.electronAPI.mapData(mapId);
+    const loadingElement = document.getElementById('loading-message');
+    loadingElement?.remove();
+    renderMap(mapData);
+  } catch {
+    const loadingElement = document.getElementById('loading-message');
+    if (!loadingElement) {
+      return;
+    }
+    loadingElement.innerText = `Couldn't parse data for map: ${mapId}`;
+  }
 };
 
 const renderMap = (mapData: MapData) => {
   const width = 2500;
   const height = 2500;
-  const canvas = document.getElementById('map-canvas') as HTMLCanvasElement;
-  if (!canvas) {
+  const imageContainer = document.getElementById('map-image-container');
+  if (!imageContainer) {
+    console.error("Couldn't find image container");
     return;
   }
+  const canvas = imageContainer?.appendChild(document.createElement('canvas')) as HTMLCanvasElement;
+  canvas.width = 2000;
+  canvas.height = 2000;
+
   const ctx = canvas.getContext('2d');
   if (!ctx) {
     return;

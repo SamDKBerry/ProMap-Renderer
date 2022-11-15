@@ -1,0 +1,21 @@
+body {
+  color: #f9fbff;
+  background-color: #343434;
+  font-family: Sans-Serif;
+  min-height: 100vh;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+#loading-message {
+  margin-top: 200px;
+}
+
+#map-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
