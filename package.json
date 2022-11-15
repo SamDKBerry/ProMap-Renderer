@@ -32,7 +32,8 @@
     "forge": {
       "packagerConfig": {
         "ignore": [
-          "src",
+          "src-electron",
+          "src-renderer",
           ".editorconfig",
           ".eslintignore",
           ".eslintrc.yml",
@@ -40,7 +41,9 @@
           ".gitignore",
           ".prettierrc.yml",
           "README.md",
-          "tsconfig.json"
+          "tsconfig.base.json",
+          "tsconfig.electron.json",
+          "tsconfig.renderer.json"
         ]
       },
       "makers": [
