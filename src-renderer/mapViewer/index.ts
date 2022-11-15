@@ -1,5 +1,5 @@
-import { Brush, MapData } from '../../interfaces/mapData.interface';
-import { Coordinate, RenderTriangle } from '../../interfaces/mapRender.interface';
+import { Brush, MapData } from '../interfaces/mapData.interface';
+import { Coordinate, RenderTriangle } from '../interfaces/mapRender.interface';
 
 const worldSpaceToPixelScale = 4;
 

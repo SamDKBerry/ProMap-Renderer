@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "outDir": "./build/electron",
+    "esModuleInterop": true
+  },
+  "include": ["src-electron/**/*"]
+}

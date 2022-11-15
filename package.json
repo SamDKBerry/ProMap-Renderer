@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "build/electron/index.js",
   "scripts": {
-    "start": "tsc && electron-forge start",
+    "start": "tsc -p tsconfig.electron.json && tsc -p tsconfig.renderer.json && electron-forge start",
     "package": "tsc && electron-forge package",
     "make": "tsc && electron-forge make",
     "lint": "eslint .",
