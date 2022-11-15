@@ -7,8 +7,8 @@
   "main": "build/electron/index.js",
   "scripts": {
     "start": "tsc -p tsconfig.electron.json && tsc -p tsconfig.renderer.json && electron-forge start",
-    "package": "tsc && electron-forge package",
-    "make": "tsc && electron-forge make",
+    "package": "tsc -p tsconfig.electron.json && tsc -p tsconfig.renderer.json && electron-forge package",
+    "make": "tsc -p tsconfig.electron.json && tsc -p tsconfig.renderer.json && electron-forge make",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

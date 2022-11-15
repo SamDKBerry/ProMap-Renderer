@@ -106,7 +106,7 @@ const brushFacesDown = (tri: Coordinate[]): boolean => {
 
 const splitTris = (tris: string): number[][] => {
   const numberArray = tris.split(';').map((corner) => parseInt(corner));
-  const groupedArray = [];
+  const groupedArray: number[][] = [];
   while (numberArray.length) groupedArray.push(numberArray.splice(0, 3));
   return groupedArray;
 };
