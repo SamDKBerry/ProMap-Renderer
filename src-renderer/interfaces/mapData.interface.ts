@@ -12,6 +12,12 @@ export interface Color {
 
 export interface MapProperties {
   mapTitle: string;
+  lavaColor: string;
+  lavaEmissiveColor: string;
+  waterColor: string;
+  waterEmissiveColor: string;
+  wasteColor: string;
+  wasteEmissiveColor: string;
 }
 
 export interface Brush {

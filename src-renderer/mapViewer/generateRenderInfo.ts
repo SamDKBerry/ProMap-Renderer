@@ -1,4 +1,4 @@
-import { Brush, MapData } from '../interfaces/mapData.interface';
+import { Brush, Face, MapData } from '../interfaces/mapData.interface';
 import { Coordinate, MapRenderInfo as MapRenderData, RenderTriangle } from '../interfaces/mapRender.interface';
 
 export const trianglesToRender = (mapData: MapData, worldSpaceToPixelScale: number): MapRenderData => {
@@ -9,12 +9,12 @@ export const trianglesToRender = (mapData: MapData, worldSpaceToPixelScale: numb
     maxX = -1000000,
     maxY = -1000000;
 
-  mapData.Brushes.forEach((Brush) => {
-    if (!shouldRenderBrush(Brush, mapData.Materials)) {
+  mapData.Brushes.forEach((brush) => {
+    if (!shouldRenderBrush(brush, mapData.Materials)) {
       return;
     }
 
-    Brush.Faces.forEach((face) => {
+    brush.Faces.forEach((face) => {
       const tris = splitTris(face.tris);
       const verts = splitVerts(face.verts);
       tris.forEach((tri) => {
@@ -42,7 +42,7 @@ export const trianglesToRender = (mapData: MapData, worldSpaceToPixelScale: numb
           }
         });
         trisToRender.push({
-          color: mapData.Colors[face.color].value,
+          color: getColor(mapData, brush, face),
           coordinates,
           heighestPoint: HeighestVert(verts),
         });
@@ -51,6 +51,22 @@ export const trianglesToRender = (mapData: MapData, worldSpaceToPixelScale: numb
   });
 
   return { tris: trisToRender, bounds: { minX, maxX, minY, maxY } };
+};
+
+const getColor = (mapData: MapData, brush: Brush, face: Face) => {
+  if (
+    mapData.Materials[brush.material] === 'Natural/Lava01_Tile' ||
+    mapData.Materials[brush.material] === 'Natural/LavaFlow_Tile'
+  ) {
+    return mapData.MapProperties.lavaEmissiveColor;
+  }
+  if (mapData.Materials[brush.material] === 'Natural/ToxicWaste01_Tile') {
+    return mapData.MapProperties.wasteEmissiveColor;
+  }
+  if (mapData.Materials[brush.material] === 'Natural/Water01_Tile') {
+    return mapData.MapProperties.waterColor;
+  }
+  return mapData.Colors[face.color].value;
 };
 
 const shouldRenderBrush = (brush: Brush, materials: string[]): boolean => {

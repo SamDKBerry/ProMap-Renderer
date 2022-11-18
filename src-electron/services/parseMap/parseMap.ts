@@ -114,8 +114,7 @@ const propertiesLine = (line: string, nextLine: string): SectionLine => {
   if (lastLineInBlock(line)) {
     return { jsonString: '},', stillInBlock: false };
   }
-
-  return { jsonString: equalsLineToJson(line, nextLine), stillInBlock: true };
+  return { jsonString: equalsLineToJsonWithColorConversion(line, nextLine), stillInBlock: true };
 };
 
 const materialLine = (line: string, nextLine: string): SectionLine => {
@@ -188,11 +187,24 @@ const closingBlockLine = () => ({ jsonString: '],', stillInBlock: false });
 const lastLineOfFile = (totalLines: number, index: number) => totalLines - 1 === index;
 
 const equalsLineToJson = (line: string, nextLine: string) => {
-  const splitLine = line
-    .split('=')
-    .filter((str) => str !== '')
-    .map((str) => JSON.stringify(str));
-  const lineContent = splitLine.length > 1 ? splitLine.join(' : ') : splitLine[0] + ' : null';
+  let [key, ...values] = line.split('=');
+  let value = values.join('=');
+  const lineContent =
+    value === '' ? `${JSON.stringify(key)} : null` : `${JSON.stringify(key)} : ${JSON.stringify(value)}`;
+  return nextLine.includes('}') ? lineContent : lineContent + ',';
+};
+
+const equalsLineToJsonWithColorConversion = (line: string, nextLine: string) => {
+  let [key, ...values] = line.split('=');
+  let value = values.join('=');
+  let lineContent;
+  if (key.endsWith('Color')) {
+    value = unityColorToRGBA(value);
+    lineContent = value === '' ? `${JSON.stringify(key)} : null` : `${JSON.stringify(key)} : ${value}`;
+  } else {
+    lineContent = value === '' ? `${JSON.stringify(key)} : null` : `${JSON.stringify(key)} : ${JSON.stringify(value)}`;
+  }
+
   return nextLine.includes('}') ? lineContent : lineContent + ',';
 };
 

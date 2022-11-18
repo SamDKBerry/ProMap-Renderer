@@ -20,7 +20,7 @@ export const drawCanvas = (renderData: MapRenderInfo) => {
   if (!ctx) {
     return;
   }
-  ctx.fillStyle = '#878787';
+  ctx.fillStyle = '#301934';
   ctx.fillRect(0, 0, width, height);
 
   renderData.tris.sort((a, b) => a.heighestPoint - b.heighestPoint);
