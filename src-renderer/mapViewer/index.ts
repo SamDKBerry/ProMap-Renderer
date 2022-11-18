@@ -1,5 +1,5 @@
 import { Brush, MapData } from '../interfaces/mapData.interface';
-import { Coordinate, RenderTriangle } from '../interfaces/mapRender.interface';
+import { Coordinate, MapRenderInfo as MapRenderData, RenderTriangle } from '../interfaces/mapRender.interface';
 
 const worldSpaceToPixelScale = 4;
 
@@ -24,32 +24,17 @@ const renderLevel = async () => {
 };
 
 const renderMap = (mapData: MapData) => {
-  const width = 2500;
-  const height = 2500;
-  const imageContainer = document.getElementById('map-image-container');
-  if (!imageContainer) {
-    console.error("Couldn't find image container");
-    return;
-  }
-  const canvas = imageContainer?.appendChild(document.createElement('canvas')) as HTMLCanvasElement;
-  canvas.width = 2000;
-  canvas.height = 2000;
-
-  const ctx = canvas.getContext('2d');
-  if (!ctx) {
-    return;
-  }
-  ctx.fillStyle = '#878787';
-  ctx.fillRect(0, 0, width, height);
-  const trisToRender = trianglesToRender(mapData);
-  trisToRender.sort((a, b) => a.heighestPoint - b.heighestPoint);
-  trisToRender.forEach((tri) => {
-    drawTriangle(tri, ctx, height);
-  });
+  const renderData = trianglesToRender(mapData);
+  drawCanvas(renderData);
 };
 
-const trianglesToRender = (mapData: MapData): RenderTriangle[] => {
+const trianglesToRender = (mapData: MapData): MapRenderData => {
   const trisToRender: RenderTriangle[] = [];
+
+  let minX = 1000000,
+    minY = 1000000,
+    maxX = -1000000,
+    maxY = -1000000;
 
   mapData.Brushes.forEach((Brush) => {
     if (!shouldRenderBrush(Brush, mapData.Materials)) {
@@ -68,6 +53,21 @@ const trianglesToRender = (mapData: MapData): RenderTriangle[] => {
         if (brushFacesDown(coordinates)) {
           return;
         }
+
+        coordinates.forEach((coord) => {
+          if (coord.x > maxX) {
+            maxX = coord.x;
+          }
+          if (coord.x < minX) {
+            minX = coord.x;
+          }
+          if (coord.y > maxY) {
+            maxY = coord.y;
+          }
+          if (coord.y < minY) {
+            minY = coord.y;
+          }
+        });
         trisToRender.push({
           color: mapData.Colors[face.color].value,
           coordinates,
@@ -77,7 +77,7 @@ const trianglesToRender = (mapData: MapData): RenderTriangle[] => {
     });
   });
 
-  return trisToRender;
+  return { tris: trisToRender, bounds: { minX, maxX, minY, maxY } };
 };
 
 const shouldRenderBrush = (brush: Brush, materials: string[]): boolean => {
@@ -112,7 +112,7 @@ const splitTris = (tris: string): number[][] => {
 };
 
 const splitVerts = (verts: string): number[][] => {
-  const centralOffset = 250;
+  const centralOffset = 0;
   const vertArray = verts.split(';');
   const formatedVerts = vertArray.map((vert) => vert.split(',').map((axis) => parseFloat(axis) + centralOffset));
   return formatedVerts;
@@ -123,12 +123,47 @@ const HeighestVert = (verts: number[][]) => {
   return Math.max.apply(null, zIndexs);
 };
 
-const drawTriangle = (tri: RenderTriangle, ctx: CanvasRenderingContext2D, height: number) => {
+const drawTriangle = (
+  tri: RenderTriangle,
+  ctx: CanvasRenderingContext2D,
+  height: number,
+  xOffset: number,
+  yOffset: number
+) => {
   ctx.fillStyle = tri.color;
   ctx.beginPath();
-  ctx.moveTo(tri.coordinates[0].x, height - tri.coordinates[0].y);
-  ctx.lineTo(tri.coordinates[1].x, height - tri.coordinates[1].y);
-  ctx.lineTo(tri.coordinates[2].x, height - tri.coordinates[2].y);
+  ctx.moveTo(tri.coordinates[0].x + xOffset, height - tri.coordinates[0].y + yOffset);
+  ctx.lineTo(tri.coordinates[1].x + xOffset, height - tri.coordinates[1].y + yOffset);
+  ctx.lineTo(tri.coordinates[2].x + xOffset, height - tri.coordinates[2].y + yOffset);
   ctx.closePath();
   ctx.fill();
+};
+
+const drawCanvas = (renderData: MapRenderData) => {
+  const border = 40;
+  const width = Math.abs(renderData.bounds.minX - renderData.bounds.maxX) + border;
+  const height = Math.abs(renderData.bounds.minY - renderData.bounds.maxY) + border;
+  const xOffset = renderData.bounds.minX * -1 + border / 2;
+  const yOffset = renderData.bounds.minY - border / 2;
+
+  const imageContainer = document.getElementById('map-image-container');
+  if (!imageContainer) {
+    console.error("Couldn't find image container");
+    return;
+  }
+  const canvas = imageContainer?.appendChild(document.createElement('canvas')) as HTMLCanvasElement;
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    return;
+  }
+  ctx.fillStyle = '#878787';
+  ctx.fillRect(0, 0, width, height);
+
+  renderData.tris.sort((a, b) => a.heighestPoint - b.heighestPoint);
+  renderData.tris.forEach((tri) => {
+    drawTriangle(tri, ctx, height, xOffset, yOffset);
+  });
 };
