@@ -3,6 +3,12 @@ export interface MapRenderInfo {
   bounds: MapBounds;
 }
 
+export interface RenderConfig {
+  worldSpaceToPixelScale: number;
+  hideNonAutomapGeometry: boolean;
+  backgroundColor: string;
+}
+
 export interface RenderTriangle {
   color: string;
   coordinates: Coordinate[];

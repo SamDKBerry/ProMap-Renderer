@@ -1,14 +1,15 @@
 import { MapData } from '../interfaces/mapData.interface';
 import { drawCanvas } from './drawMap.js';
 import { trianglesToRender } from './generateRenderInfo.js';
+import { setupControls } from './viewerControls.js';
+import { renderConfig, updateRenderConfig } from './renderConfig.js';
 
-const worldSpaceToPixelScale = 4;
-
-window.onload = function () {
-  renderLevel();
+window.onload = () => {
+  setupControls();
+  parseAndRenderLevel();
 };
 
-const renderLevel = async () => {
+const parseAndRenderLevel = async () => {
   const mapId = await window.electronAPI.currentMap();
   try {
     const mapData = await window.electronAPI.mapData(mapId);
@@ -18,10 +19,17 @@ const renderLevel = async () => {
   }
 };
 
+export const refreshMap = () => {
+  updateRenderConfig();
+  const canvas = document.getElementById('mapCanvas');
+  canvas?.remove();
+  parseAndRenderLevel();
+};
+
 const renderMap = (mapData: MapData) => {
-  const renderData = trianglesToRender(mapData, worldSpaceToPixelScale);
+  const renderData = trianglesToRender(mapData, renderConfig);
   removeLoadingText();
-  drawCanvas(renderData);
+  drawCanvas(renderData, renderConfig);
 };
 
 const loadingElement = () => document.getElementById('loading-message');

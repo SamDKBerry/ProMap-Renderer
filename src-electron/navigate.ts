@@ -8,3 +8,12 @@ export const navigateToMap = () => {
     console.error("Couldn't find focussed window");
   }
 };
+
+export const navigateToHome = () => {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+    win.loadFile('./assets/pages/home.html');
+  } else {
+    console.error("Couldn't find focussed window");
+  }
+};

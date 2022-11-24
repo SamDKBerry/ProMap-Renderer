@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain, protocol } from 'electron';
-import { navigateToMap } from './navigate';
+import { navigateToHome, navigateToMap } from './navigate';
 import { findCommunityMaps } from './services/fileSystem/findCommunityMaps';
 import { mapData } from './services/parseMap/parseMap';
 import * as url from 'url';
@@ -8,6 +8,7 @@ if (require('electron-squirrel-startup')) app.quit();
 
 import * as path from 'path';
 import { pathToMaps } from './services/fileSystem/paths';
+import { saveCanvasAsImage } from './services/fileSystem/saveImage';
 let currentMap = '';
 
 const createWindow = () => {
@@ -32,9 +33,16 @@ app.whenReady().then(() => {
     currentMap = mapId;
     navigateToMap();
   });
+  ipcMain.handle('navigate:toHome', (_event) => {
+    navigateToHome();
+  });
   ipcMain.handle('map:currentMap', () => {
     return currentMap;
   });
+  ipcMain.handle('map:saveImage', (_event, base64Data: string) => {
+    saveCanvasAsImage(base64Data);
+  });
+
   protocol.registerFileProtocol('secure-file', (request, callback) => {
     const filePath = url.fileURLToPath('file://' + request.url.slice('secure-file://'.length));
     callback(filePath);

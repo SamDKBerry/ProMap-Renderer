@@ -1,7 +1,15 @@
 import { Brush, Face, MapData } from '../interfaces/mapData.interface';
-import { Coordinate, MapRenderInfo as MapRenderData, RenderTriangle } from '../interfaces/mapRender.interface';
+import {
+  Coordinate,
+  MapRenderInfo as MapRenderData,
+  RenderConfig,
+  RenderTriangle,
+} from '../interfaces/mapRender.interface';
 
-export const trianglesToRender = (mapData: MapData, worldSpaceToPixelScale: number): MapRenderData => {
+export const trianglesToRender = (
+  mapData: MapData,
+  { worldSpaceToPixelScale, hideNonAutomapGeometry }: RenderConfig
+): MapRenderData => {
   const trisToRender: RenderTriangle[] = [];
 
   let minX = 1000000,
@@ -10,7 +18,7 @@ export const trianglesToRender = (mapData: MapData, worldSpaceToPixelScale: numb
     maxY = -1000000;
 
   mapData.Brushes.forEach((brush) => {
-    if (!shouldRenderBrush(brush, mapData.Materials)) {
+    if (!shouldRenderBrush(brush, mapData.Materials, hideNonAutomapGeometry)) {
       return;
     }
 
@@ -69,13 +77,13 @@ const getColor = (mapData: MapData, brush: Brush, face: Face) => {
   return mapData.Colors[face.color].value;
 };
 
-const shouldRenderBrush = (brush: Brush, materials: string[]): boolean => {
+const shouldRenderBrush = (brush: Brush, materials: string[], hideNonAutomapGeometry: boolean): boolean => {
   if (
     materials[brush.material].startsWith('Skybox/') ||
     materials[brush.material] === 'Shadow' ||
     materials[brush.material] === 'AIVisBlocker' ||
     materials[brush.material] === 'PlayerClip' ||
-    brush.mapDraw === 'False'
+    (hideNonAutomapGeometry && brush.mapDraw === 'False')
   ) {
     return false;
   } else {

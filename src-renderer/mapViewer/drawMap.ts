@@ -1,6 +1,6 @@
-import { RenderTriangle, MapRenderInfo } from '../interfaces/mapRender.interface';
+import { RenderTriangle, MapRenderInfo, RenderConfig } from '../interfaces/mapRender.interface';
 
-export const drawCanvas = (renderData: MapRenderInfo) => {
+export const drawCanvas = (renderData: MapRenderInfo, renderConfig: RenderConfig) => {
   const border = 40;
   const width = Math.abs(renderData.bounds.minX - renderData.bounds.maxX) + border;
   const height = Math.abs(renderData.bounds.minY - renderData.bounds.maxY) + border;
@@ -13,6 +13,7 @@ export const drawCanvas = (renderData: MapRenderInfo) => {
     return;
   }
   const canvas = imageContainer?.appendChild(document.createElement('canvas')) as HTMLCanvasElement;
+  canvas.id = 'mapCanvas';
   canvas.width = width;
   canvas.height = height;
 
@@ -20,7 +21,7 @@ export const drawCanvas = (renderData: MapRenderInfo) => {
   if (!ctx) {
     return;
   }
-  ctx.fillStyle = '#301934';
+  ctx.fillStyle = renderConfig.backgroundColor;
   ctx.fillRect(0, 0, width, height);
 
   renderData.tris.sort((a, b) => a.heighestPoint - b.heighestPoint);
@@ -37,10 +38,12 @@ const drawTriangle = (
   yOffset: number
 ) => {
   ctx.fillStyle = tri.color;
+  ctx.strokeStyle = tri.color;
   ctx.beginPath();
   ctx.moveTo(tri.coordinates[0].x + xOffset, height - tri.coordinates[0].y + yOffset);
   ctx.lineTo(tri.coordinates[1].x + xOffset, height - tri.coordinates[1].y + yOffset);
   ctx.lineTo(tri.coordinates[2].x + xOffset, height - tri.coordinates[2].y + yOffset);
   ctx.closePath();
   ctx.fill();
+  ctx.stroke();
 };

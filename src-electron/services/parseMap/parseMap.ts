@@ -15,7 +15,6 @@ enum MapDataSection {
 export const mapData = async (mapId: string) => {
   const absoluteFilePath = `${pathToMaps}/${mapId}/map.map`;
   const fileContent = await asyncReadFile(absoluteFilePath);
-  console.log(mapId);
   return fileContentToMapObject(fileContent);
 };
 
@@ -24,8 +23,6 @@ const fileContentToMapObject = (fileContent: string) => {
   const fileVersion = fileLines.shift();
   if (fileVersion !== '﻿Version_1') {
     console.warn(`No official support for file version: ${fileVersion}`);
-  } else {
-    console.log(`Map file version is ${fileVersion}`);
   }
 
   let section = MapDataSection.NONE;
@@ -212,7 +209,7 @@ const unityColorToRGBA = (unityColor: string) => {
   const rgb = unityColor
     .split(',')
     .map((v: string) => v.replace('"', ''))
-    .map((v: string, index: number) => (index === 3 ? v : Math.round(parseFloat(v) * 255).toString()));
+    .map((v: string, index: number) => (index === 3 ? 1 : Math.round(parseFloat(v) * 255).toString()));
   return JSON.stringify('rgba(' + rgb.join(', ') + ')');
 };
 interface SectionLine {

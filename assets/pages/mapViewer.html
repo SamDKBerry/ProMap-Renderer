@@ -9,7 +9,50 @@
     <script type="module" src="../../build/renderer/mapViewer/index.js"></script>
   </head>
   <body>
-    <h1>Map</h1>
+    <header>
+      <button id="backButton">
+        <span class="icon icon-gallery" role="img" aria-label="Back to level selection"> </span>
+      </button>
+      <div>
+        <div class="dropdown">
+          <button id="toggleColorDropdownButton" class="toggle-button">
+            <span class="icon icon-color" role="img" aria-label="Background Color selection"> </span>
+          </button>
+          <form id="backgroundColorDropdownContent" class="dropdown-content">
+            <label hidden for="backgroundColor">Set level background Color</label>
+            <input type="color" id="mapBackgroundColor" name="backgroundColor" value="#ff0000" />
+          </form>
+        </div>
+        <div class="dropdown">
+          <button id="toggleSlidersDropdownButton" class="toggle-button">
+            <span class="icon icon-sliders" role="img" aria-label="Edit render options"> </span>
+          </button>
+          <div id="backgroundSlidersDropdownContent" class="dropdown-content">
+            <form class="sliders-form">
+              <span>
+                <label for="pixelScale">World space to pixel scale:</label>
+                <select id="pixelScale" name="pixelScale">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                  <option value="8">8</option>
+                </select>
+              </span>
+              <span>
+                <label for="autoMapHide">Hide non automap</label>
+                <input type="checkbox" id="autoMapHide" name="autoMapHide" value="autoMapHide" />
+              </span>
+            </form>
+          </div>
+        </div>
+        <button id="refreshButton">
+          <span class="icon icon-refresh" role="img" aria-label="Redraw level"> </span>
+        </button>
+      </div>
+      <button id="downloadButton">
+        <span class="icon icon-download" role="img" aria-label="Download level image"> </span>
+      </button>
+    </header>
     <div id="map-image-container">
       <p id="loading-message">Generating level layout...</p>
     </div>

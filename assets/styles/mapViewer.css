@@ -3,11 +3,109 @@ body {
   background-color: #343434;
   font-family: Sans-Serif;
   min-height: 100vh;
+  margin: 0px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #63666a;
+  color: #f1f1f1;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.icon {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+}
+
+.icon-gallery {
+  background-image: url(../icons/gallery.svg);
+}
+
+.icon-color {
+  background-image: url(../icons/saturation.svg);
+}
+
+.icon-refresh {
+  background-image: url(../icons/refresh.svg);
+}
+
+.icon-sliders {
+  background-image: url(../icons/ui.svg);
+}
+
+.icon-download {
+  background-image: url(../icons/download.svg);
+}
+
+input {
+  background-color: #63666a;
+  color: #f1f1f1;
+  font-size: 16px;
+  padding: 5px;
+}
+
+select {
+  background-color: #63666a;
+  color: #f1f1f1;
+  font-size: 16px;
+  padding: 5px;
+  display: flex;
+}
+
+label {
+  background-color: #63666a;
+  color: #f1f1f1;
+  font-size: 16px;
+  padding: 5px;
+}
+
+form {
+  background-color: #63666a;
+  color: #f1f1f1;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+#mapBackgroundColor {
+  width: 12rem;
+  height: 5rem;
+}
+
+#submitUpdateColor {
+  width: 100%;
+  text-align: center;
+}
+
+.show {
+  display: block;
 }
 
 h1 {
   display: flex;
-  justify-content: center;
 }
 
 #loading-message {
@@ -18,4 +116,24 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.sliders-form {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  background-color: #343434;
+  padding: 0px;
+}
+
+.sliders-form > span {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #63666a;
+  margin-top: 5px;
+}
+
+.stale {
+  background-color: #660000;
 }
