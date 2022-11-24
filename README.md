@@ -26,12 +26,8 @@ Then run:
 
 ## Run
 
-ProMap takes an argument of the mapId you want to generate an image for. That map needs to exists in the LocalLow/BoundingBoxSoftware/Prodeus/CloudMaps maps folder (thats where it should be if you've downloaded it in game).
+To compile and run the map locally:
+`npm run-script start`
 
-`npm run-script start MAP_ID`
-
-If for example you had downloaded Altitude (which has the map Id hPkZH3dKig) and wanted to render it's layout you'd run:
-
-`npm run-script start hPkZH3dKig`
-
-The image will be rendered to an output folder in the root of this project. The above command would create `./output/Altitude.png`.
+To package a windows distributabel of the app
+`npm run-script make`
