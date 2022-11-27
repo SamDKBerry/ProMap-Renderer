@@ -8,9 +8,6 @@ This is currently very wip, it's able to render a top down view of a Prodeus lev
 
 - Center levels in the image editor and scale image around them
 - Look at making tool a bit more customisable with options to:
-  - Show areas not on automap
-  - change background colour
-  - change resolution
   - add map and author titles
   - add grid overlay
   - show nodes and node links
