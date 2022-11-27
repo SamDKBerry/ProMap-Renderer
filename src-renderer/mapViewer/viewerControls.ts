@@ -3,69 +3,74 @@ import { refreshMap } from './index.js';
 import { renderConfig, updateEditedRenderConfig } from './renderConfig.js';
 
 export const setupControls = () => {
-  setDefualtColorInPicker();
   setupConfigButtons();
   setupWindowEvents();
 };
 
-const setDefualtColorInPicker = () => {
-  const colorInput = document.getElementById('mapBackgroundColor') as HTMLInputElement;
-  colorInput.value = renderConfig.backgroundColor;
-  const pixelScaleInput = document.getElementById('pixelScale') as HTMLInputElement;
-  pixelScaleInput.value = renderConfig.worldSpaceToPixelScale.toString();
-  const autoMapHideInput = document.getElementById('autoMapHide') as HTMLInputElement;
-  autoMapHideInput.checked = renderConfig.hideNonAutomapGeometry;
+const setupConfigButtons = () => {
+  setupActionButton('toggleSlidersDropdownButton', 'click', () => toggleDropdown('backgroundSlidersDropdownContent'));
+  setupActionButton('toggleColorDropdownButton', 'click', () => toggleDropdown('backgroundColorDropdownContent'));
+  setupActionButton('backButton', 'click', () => window.electronAPI.navigateToHome());
+  setupActionButton('refreshButton', 'click', () => refresh());
+  setupActionButton('downloadButton', 'click', () => downloadImage());
+
+  setupRenderConfigControlButton('pixelScale', 'input', 'worldSpaceToPixelScale');
+  setupRenderConfigControlButton('mapBackgroundColor', 'input', 'backgroundColor');
+  setupRenderConfigControlButton('autoMapHide', 'input', 'hideNonAutomapGeometry');
 };
 
-const setupConfigButtons = () => {
-  const backButton = document.getElementById('backButton');
-  if (backButton) {
-    backButton.addEventListener('click', () => window.electronAPI.navigateToHome());
+const setupRenderConfigControlButton = (id: string, type: string, renderConfigKey: keyof RenderConfig) => {
+  const inputElement = document.getElementById(id) as HTMLInputElement;
+  if (inputElement) {
+    setRenderConfigControlButtonValue(inputElement, renderConfigKey);
+    setRenderConfigControlEventListener(inputElement, type, renderConfigKey);
+  } else {
+    console.error(`Could not find control button with Id: ${id}`);
   }
-  const toggleColorDropdownButton = document.getElementById('toggleColorDropdownButton');
-  if (toggleColorDropdownButton) {
-    toggleColorDropdownButton.addEventListener('click', () => toggleDropdown('backgroundColorDropdownContent'));
-  }
+};
 
-  const toggleSlidersDropdownButton = document.getElementById('toggleSlidersDropdownButton');
-  if (toggleSlidersDropdownButton) {
-    toggleSlidersDropdownButton.addEventListener('click', () => toggleDropdown('backgroundSlidersDropdownContent'));
+const setRenderConfigControlButtonValue = (inputElement: HTMLInputElement, renderConfigKey: keyof RenderConfig) => {
+  switch (typeof renderConfig[renderConfigKey]) {
+    case 'number':
+      inputElement.value = renderConfig[renderConfigKey].toString();
+      break;
+    case 'boolean':
+      inputElement.checked = renderConfig[renderConfigKey] as boolean;
+      break;
+    default:
+      inputElement.value = renderConfig[renderConfigKey] as string;
+      break;
   }
+};
 
-  const colorInput = document.getElementById('mapBackgroundColor') as HTMLInputElement;
-  if (colorInput) {
-    colorInput.addEventListener('input', () => makeEdit({ backgroundColor: colorInput.value }));
-  }
+const setRenderConfigControlEventListener = (
+  inputElement: HTMLInputElement,
+  type: string,
+  renderConfigKey: keyof RenderConfig
+) => {
+  inputElement.addEventListener(type, () => {
+    let newValue;
+    switch (typeof renderConfig[renderConfigKey]) {
+      case 'number':
+        newValue = parseInt(inputElement.value);
+        break;
+      case 'boolean':
+        newValue = inputElement.checked;
+        break;
+      default:
+        newValue = inputElement.value;
+        break;
+    }
+    makeEdit({ [renderConfigKey]: newValue });
+  });
+};
 
-  const pixelScaleInput = document.getElementById('pixelScale') as HTMLInputElement;
-  if (pixelScaleInput) {
-    pixelScaleInput.addEventListener('input', () =>
-      makeEdit({ worldSpaceToPixelScale: parseInt(pixelScaleInput.value) })
-    );
-  }
-
-  const autoMapHideInput = document.getElementById('autoMapHide') as HTMLInputElement;
-  if (autoMapHideInput) {
-    autoMapHideInput.addEventListener('input', () => makeEdit({ hideNonAutomapGeometry: autoMapHideInput.checked }));
-  }
-  const refreshButton = document.getElementById('refreshButton');
-  if (refreshButton) {
-    refreshButton.addEventListener('click', () => {
-      setRefreshClean();
-      refreshMap();
-    });
-  }
-
-  const downloadButton = document.getElementById('downloadButton');
-  if (downloadButton) {
-    downloadButton.addEventListener('click', () => {
-      const canvas = document.getElementById('mapCanvas') as HTMLCanvasElement;
-      const url = canvas.toDataURL();
-      const base64Data = url.replace(/^data:image\/png;base64,/, '');
-      if (canvas) {
-        window.electronAPI.saveCanvasAsImage(base64Data);
-      }
-    });
+const setupActionButton = (id: string, type: string, listener: () => void) => {
+  const actionButton = document.getElementById(id);
+  if (actionButton) {
+    actionButton.addEventListener(type, listener);
+  } else {
+    console.error(`Could not find action button with Id: ${id}`);
   }
 };
 
@@ -121,6 +126,20 @@ const setRefreshDirty = () => {
   if (refreshButton) {
     refreshButton.classList.add('stale');
   }
+};
+
+const downloadImage = () => {
+  const canvas = document.getElementById('mapCanvas') as HTMLCanvasElement;
+  const url = canvas.toDataURL();
+  const base64Data = url.replace(/^data:image\/png;base64,/, '');
+  if (canvas) {
+    window.electronAPI.saveCanvasAsImage(base64Data);
+  }
+};
+
+const refresh = () => {
+  setRefreshClean();
+  refreshMap();
 };
 
 const setRefreshClean = () => {
