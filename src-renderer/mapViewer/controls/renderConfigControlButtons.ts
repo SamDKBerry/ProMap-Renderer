@@ -6,6 +6,10 @@ export const setupRenderConfigControlButtons = () => {
   setupRenderConfigControlButton('pixelScale', 'input', 'worldSpaceToPixelScale');
   setupRenderConfigControlButton('mapBackgroundColor', 'input', 'backgroundColor');
   setupRenderConfigControlButton('autoMapHide', 'input', 'hideNonAutomapGeometry');
+  setupRenderConfigControlButton('shadowHide', 'input', 'hideShadowBlocker');
+  setupRenderConfigControlButton('skyboxHide', 'input', 'hideSkybox');
+  setupRenderConfigControlButton('downwardBrushesHide', 'input', 'hideDownwardBrushes');
+  setupRenderConfigControlButton('border', 'input', 'border');
 };
 
 const setupRenderConfigControlButton = (id: string, type: string, renderConfigKey: keyof RenderConfig) => {

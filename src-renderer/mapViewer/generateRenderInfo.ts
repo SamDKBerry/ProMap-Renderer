@@ -6,10 +6,7 @@ import {
   RenderTriangle,
 } from '../interfaces/mapRender.interface';
 
-export const trianglesToRender = (
-  mapData: MapData,
-  { worldSpaceToPixelScale, hideNonAutomapGeometry }: RenderConfig
-): MapRenderData => {
+export const trianglesToRender = (mapData: MapData, renderConfig: RenderConfig): MapRenderData => {
   const trisToRender: RenderTriangle[] = [];
 
   let minX = 1000000,
@@ -18,7 +15,7 @@ export const trianglesToRender = (
     maxY = -1000000;
 
   mapData.Brushes.forEach((brush) => {
-    if (!shouldRenderBrush(brush, mapData.Materials, hideNonAutomapGeometry)) {
+    if (!shouldRenderBrush(brush, mapData.Materials, renderConfig)) {
       return;
     }
 
@@ -27,11 +24,20 @@ export const trianglesToRender = (
       const verts = splitVerts(face.verts);
       tris.forEach((tri) => {
         const coordinates = [
-          { x: verts[tri[0]][0] * worldSpaceToPixelScale, y: verts[tri[0]][2] * worldSpaceToPixelScale },
-          { x: verts[tri[1]][0] * worldSpaceToPixelScale, y: verts[tri[1]][2] * worldSpaceToPixelScale },
-          { x: verts[tri[2]][0] * worldSpaceToPixelScale, y: verts[tri[2]][2] * worldSpaceToPixelScale },
+          {
+            x: verts[tri[0]][0] * renderConfig.worldSpaceToPixelScale,
+            y: verts[tri[0]][2] * renderConfig.worldSpaceToPixelScale,
+          },
+          {
+            x: verts[tri[1]][0] * renderConfig.worldSpaceToPixelScale,
+            y: verts[tri[1]][2] * renderConfig.worldSpaceToPixelScale,
+          },
+          {
+            x: verts[tri[2]][0] * renderConfig.worldSpaceToPixelScale,
+            y: verts[tri[2]][2] * renderConfig.worldSpaceToPixelScale,
+          },
         ];
-        if (brushFacesDown(coordinates)) {
+        if (renderConfig.hideDownwardBrushes && brushFacesDown(coordinates)) {
           return;
         }
 
@@ -77,13 +83,13 @@ const getColor = (mapData: MapData, brush: Brush, face: Face) => {
   return mapData.Colors[face.color].value;
 };
 
-const shouldRenderBrush = (brush: Brush, materials: string[], hideNonAutomapGeometry: boolean): boolean => {
+const shouldRenderBrush = (brush: Brush, materials: string[], rednerConfig: RenderConfig): boolean => {
   if (
-    materials[brush.material].startsWith('Skybox/') ||
-    materials[brush.material] === 'Shadow' ||
+    (rednerConfig.hideSkybox && materials[brush.material].startsWith('Skybox/')) ||
+    (rednerConfig.hideShadowBlocker && materials[brush.material] === 'Shadow') ||
     materials[brush.material] === 'AIVisBlocker' ||
     materials[brush.material] === 'PlayerClip' ||
-    (hideNonAutomapGeometry && brush.mapDraw === 'False')
+    (rednerConfig.hideNonAutomapGeometry && brush.mapDraw === 'False')
   ) {
     return false;
   } else {

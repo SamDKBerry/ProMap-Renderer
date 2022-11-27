@@ -6,7 +6,11 @@ export interface MapRenderInfo {
 export interface RenderConfig {
   worldSpaceToPixelScale: number;
   hideNonAutomapGeometry: boolean;
+  hideSkybox: boolean;
+  hideShadowBlocker: boolean;
+  hideDownwardBrushes: boolean;
   backgroundColor: string;
+  border: number;
 }
 
 export interface RenderTriangle {

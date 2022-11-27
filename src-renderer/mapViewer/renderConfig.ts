@@ -4,9 +4,13 @@ export const renderConfigDefaults = {
   worldSpaceToPixelScale: 4,
   backgroundColor: '#301934',
   hideNonAutomapGeometry: true,
+  hideShadowBlocker: true,
+  hideSkybox: true,
+  hideDownwardBrushes: true,
+  border: 20,
 };
 
-export let renderConfig = renderConfigDefaults;
+export let renderConfig: RenderConfig = renderConfigDefaults;
 
 export let editedRenderConfigValues = {} as Partial<RenderConfig>;
 

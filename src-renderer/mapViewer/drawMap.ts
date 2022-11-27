@@ -1,11 +1,10 @@
 import { RenderTriangle, MapRenderInfo, RenderConfig } from '../interfaces/mapRender.interface';
 
 export const drawCanvas = (renderData: MapRenderInfo, renderConfig: RenderConfig) => {
-  const border = 40;
-  const width = Math.abs(renderData.bounds.minX - renderData.bounds.maxX) + border;
-  const height = Math.abs(renderData.bounds.minY - renderData.bounds.maxY) + border;
-  const xOffset = renderData.bounds.minX * -1 + border / 2;
-  const yOffset = renderData.bounds.minY - border / 2;
+  const width = Math.abs(renderData.bounds.minX - renderData.bounds.maxX) + renderConfig.border;
+  const height = Math.abs(renderData.bounds.minY - renderData.bounds.maxY) + renderConfig.border;
+  const xOffset = renderData.bounds.minX * -1 + renderConfig.border / 2;
+  const yOffset = renderData.bounds.minY - renderConfig.border / 2;
 
   const imageContainer = document.getElementById('map-image-container');
   if (!imageContainer) {
