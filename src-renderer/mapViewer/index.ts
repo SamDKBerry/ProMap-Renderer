@@ -1,7 +1,7 @@
 import { MapData } from '../interfaces/mapData.interface';
 import { drawCanvas } from './drawMap.js';
 import { trianglesToRender } from './generateRenderInfo.js';
-import { setupControls } from './viewerControls.js';
+import { setupControls } from './controls/viewerControls.js';
 import { renderConfig, updateRenderConfig } from './renderConfig.js';
 
 window.onload = () => {
