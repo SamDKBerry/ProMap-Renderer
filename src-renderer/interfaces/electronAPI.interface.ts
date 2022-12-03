@@ -1,4 +1,5 @@
 import { MapData } from './mapData.interface';
+import { MapInfo } from './mapInfo.interface';
 
 declare global {
   interface Window {
@@ -10,6 +11,7 @@ export interface ElectronAPI {
   getMaps: () => string[];
   pathToMaps: () => string;
   mapData: (mapId: string) => MapData;
+  mapInfo: (mapId: string) => MapInfo;
   navigateToMap: (mapId: string) => void;
   navigateToHome: () => void;
   currentMap: () => string;

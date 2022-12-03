@@ -2,17 +2,7 @@ body {
   color: #f9fbff;
   background-color: #343434;
   font-family: Sans-Serif;
-}
-
-button {
-  border: 0;
-  background: transparent;
-  margin: 5px;
-  transition: 0.1s;
-}
-
-button:hover {
-  transform: scale(1.025);
+  margin: 0px;
 }
 
 ul {
@@ -24,10 +14,50 @@ ul {
 h1 {
   display: flex;
   justify-content: center;
+  border-bottom: 4px;
+  border-bottom-style: solid;
+  padding: 10px;
+  border-bottom-color: #f9fbff;
 }
 
 #map-container > ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 0px 8px 8px;
+}
+
+.level-button {
+  background: transparent;
+  margin: 10px;
+  transition: 0.1s;
+  display: flex;
+  flex-direction: column;
+  width: 520px;
+  padding: 0px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #63666a;
+}
+
+.level-button:hover {
+  transform: scale(1.005);
+  border-image: linear-gradient(#600f0b, #420d09) 30;
+  border-width: 4px;
+  border-style: solid;
+}
+
+.info-container {
+  width: 492px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #63666a;
+  color: #f1f1f1;
+  padding: 10px;
+}
+
+.level-name {
+  font-weight: bold;
+  font-size: 16px;
 }
