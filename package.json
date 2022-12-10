@@ -15,6 +15,7 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.1",
     "@electron-forge/maker-squirrel": "^6.0.1",
+    "@electron-forge/maker-zip": "^6.0.4",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
@@ -27,33 +28,5 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "ignore": [
-          "src-electron",
-          "src-renderer",
-          ".editorconfig",
-          ".eslintignore",
-          ".eslintrc.yml",
-          ".gitattributes",
-          ".gitignore",
-          ".prettierrc.yml",
-          "README.md",
-          "tsconfig.base.json",
-          "tsconfig.electron.json",
-          "tsconfig.renderer.json"
-        ]
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "electron_quick_start"
-          }
-        }
-      ]
-    }
   }
 }
