@@ -10,69 +10,66 @@
   </head>
   <body>
     <header>
-      <button id="backButton">
-        <span class="icon icon-gallery" role="img" aria-label="Back to level selection"> </span>
-      </button>
       <div>
-        <div class="dropdown">
-          <button id="toggleColorDropdownButton" class="toggle-button">
-            <span class="icon icon-color" role="img" aria-label="Background Color selection"> </span>
-          </button>
-          <form id="backgroundColorDropdownContent" class="dropdown-content">
-            <label hidden for="backgroundColor">Set level background Color</label>
-            <input type="color" id="mapBackgroundColor" name="backgroundColor" value="#ff0000" />
-          </form>
-        </div>
-        <div class="dropdown">
-          <button id="toggleSlidersDropdownButton" class="toggle-button">
-            <span class="icon icon-sliders" role="img" aria-label="Edit render options"> </span>
-          </button>
-          <div id="backgroundSlidersDropdownContent" class="dropdown-content">
-            <form class="sliders-form">
-              <span>
-                <label for="pixelScale">World space to pixel scale:</label>
-                <select id="pixelScale" name="pixelScale">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="4">4</option>
-                  <option value="8">8</option>
-                </select>
-              </span>
-              <span>
-                <label for="border">Map border:</label>
-                <input type="number" id="border" name="border" min="0" max="100000" />
-              </span>
-              <span>
-                <label for="autoMapHide">Hide non automap</label>
-                <input type="checkbox" id="autoMapHide" name="autoMapHide" value="autoMapHide" />
-              </span>
-              <span>
-                <label for="skyboxHide">Hide Skybox Brushes</label>
-                <input type="checkbox" id="skyboxHide" name="skyboxHide" value="skyboxHide" />
-              </span>
-              <span>
-                <label for="shadowHide">Hide Shadow Brushes</label>
-                <input type="checkbox" id="shadowHide" name="shadowHide" value="shadowHide" />
-              </span>
-              <span>
-                <label for="downwardBrushesHide">Hide Downward Facing Brushes</label>
-                <input
-                  type="checkbox"
-                  id="downwardBrushesHide"
-                  name="downwardBrushesHide"
-                  value="downwardBrushesHide"
-                />
-              </span>
-            </form>
-          </div>
-        </div>
-        <button id="refreshButton">
-          <span class="icon icon-refresh" role="img" aria-label="Redraw level"> </span>
+        <button id="backButton">
+          <span class="icon icon-gallery" role="img" aria-label="Back to level selection"> </span>
         </button>
       </div>
-      <button id="downloadButton">
-        <span class="icon icon-download" role="img" aria-label="Download level image"> </span>
-      </button>
+      <div>
+        <form id="backgroundColorDropdownContent" class="sliders-form">
+          <span>
+            <label for="backgroundColor">Background Color</label>
+            <input type="color" id="mapBackgroundColor" name="backgroundColor" value="#ff0000" />
+          </span>
+          <span>
+            <label for="pixelScale">Grid to pixel scale:</label>
+            <select id="pixelScale" name="pixelScale">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="8">8</option>
+            </select>
+          </span>
+          <span>
+            <label for="border">Border:</label>
+            <input class="number-input" type="number" id="border" name="border" min="0" max="100000" />
+          </span>
+          <span>
+            <label for="autoMapHide">Hide non automap</label>
+            <input type="checkbox" class="bigCheckbox" id="autoMapHide" name="autoMapHide" value="autoMapHide" />
+          </span>
+          <span>
+            <label for="skyboxHide">Hide Skybox Brushes</label>
+            <input type="checkbox" class="bigCheckbox" id="skyboxHide" name="skyboxHide" value="skyboxHide" />
+          </span>
+          <span>
+            <label for="shadowHide">Hide Shadow Brushes</label>
+            <input type="checkbox" class="bigCheckbox" id="shadowHide" name="shadowHide" value="shadowHide" />
+          </span>
+          <span>
+            <label for="downwardBrushesHide">Hide Downward Facing Brushes</label>
+            <input
+              type="checkbox"
+              class="bigCheckbox"
+              id="downwardBrushesHide"
+              name="downwardBrushesHide"
+              value="downwardBrushesHide"
+            />
+          </span>
+        </form>
+      </div>
+      <div class="right-action-buttons">
+        <span>
+          <button id="refreshButton">
+            <span class="icon icon-refresh" role="img" aria-label="Redraw level"> </span>
+          </button>
+        </span>
+        <span>
+          <button id="downloadButton">
+            <span class="icon icon-download" role="img" aria-label="Download level image"> </span>
+          </button>
+        </span>
+      </div>
     </header>
     <div id="map-image-container">
       <p id="loading-message">Generating level layout...</p>

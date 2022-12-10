@@ -8,8 +8,9 @@ body {
 
 header {
   display: flex;
-  justify-content: space-between;
   margin-bottom: 10px;
+  border-bottom-style: solid;
+  border-bottom-color: #f9fbff;
 }
 
 button {
@@ -49,6 +50,11 @@ button {
   background-image: url(../icons/download.svg);
 }
 
+.number-input {
+  width: 2rem;
+  text-align: right;
+}
+
 input {
   background-color: #63666a;
   color: #f1f1f1;
@@ -78,21 +84,16 @@ form {
   padding: 5px;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
 #mapBackgroundColor {
-  width: 12rem;
-  height: 5rem;
+  width: 4rem;
+  height: 100%;
+  padding: 0px;
+  border: 0px;
+}
+
+.bigCheckbox {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 #submitUpdateColor {
@@ -112,6 +113,12 @@ h1 {
   margin-top: 200px;
 }
 
+.right-action-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-left: auto;
+}
+
 #map-image-container {
   display: flex;
   justify-content: center;
@@ -120,18 +127,25 @@ h1 {
 
 .sliders-form {
   display: flex;
-  flex-direction: column;
-  width: 20rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
   background-color: #343434;
   padding: 0px;
 }
 
 .sliders-form > span {
+  min-height: 42px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: #63666a;
-  margin-top: 5px;
+  margin-right: 2px;
+  margin-bottom: 2px;
+}
+
+.sliders-form > span > * {
+  align-self: center;
 }
 
 .stale {
