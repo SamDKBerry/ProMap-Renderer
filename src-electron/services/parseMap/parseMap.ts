@@ -1,4 +1,4 @@
-import { pathToMaps } from '../fileSystem/paths';
+import { pathToCommunityMaps } from '../fileSystem/paths';
 import { asyncReadFile } from './readFile';
 
 enum MapDataSection {
@@ -13,7 +13,7 @@ enum MapDataSection {
 }
 
 export const mapData = async (mapId: string) => {
-  const absoluteFilePath = `${pathToMaps}/${mapId}/map.map`;
+  const absoluteFilePath = `${pathToCommunityMaps}/${mapId}/map.map`;
   const fileContent = await asyncReadFile(absoluteFilePath);
   return fileContentToMapObject(fileContent);
 };

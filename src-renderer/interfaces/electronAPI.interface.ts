@@ -8,7 +8,8 @@ declare global {
 }
 
 export interface ElectronAPI {
-  getMaps: () => string[];
+  findCommunityMaps: () => string[];
+  findEditorMaps: () => string[];
   pathToMaps: () => string;
   mapData: (mapId: string) => MapData;
   mapInfo: (mapId: string) => MapInfo;

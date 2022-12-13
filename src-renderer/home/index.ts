@@ -1,5 +1,6 @@
 const loadMaps = async () => {
-  const maps = await window.electronAPI.getMaps();
+  const maps = await window.electronAPI.findCommunityMaps();
+  console.log(await window.electronAPI.findEditorMaps());
   const pathToMaps = await window.electronAPI.pathToMaps();
   const mapContainerElement = document.getElementById('map-container');
   if (!mapContainerElement) {
