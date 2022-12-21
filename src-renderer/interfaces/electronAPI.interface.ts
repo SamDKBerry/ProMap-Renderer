@@ -1,5 +1,5 @@
-import { MapData } from './mapData.interface';
-import { MapInfo } from './mapInfo.interface';
+import { MapData } from '../../src-types/mapData';
+import { MapInfo, MapListType } from '../../src-types/mapInfo';
 
 declare global {
   interface Window {
@@ -16,5 +16,7 @@ export interface ElectronAPI {
   navigateToMap: (mapId: string) => void;
   navigateToHome: () => void;
   currentMap: () => string;
+  getMapSelectionType: () => MapListType;
+  updateMapSelectionType: (newListType: MapListType) => void;
   saveCanvasAsImage: (base64Data: string) => void;
 }

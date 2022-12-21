@@ -12,8 +12,8 @@ enum MapDataSection {
   NODE,
 }
 
-export const mapData = async (mapId: string) => {
-  const absoluteFilePath = `${pathToCommunityMaps}/${mapId}/map.map`;
+export const mapData = async (mapPath: string) => {
+  const absoluteFilePath = mapPath;
   const fileContent = await asyncReadFile(absoluteFilePath);
   return fileContentToMapObject(fileContent);
 };

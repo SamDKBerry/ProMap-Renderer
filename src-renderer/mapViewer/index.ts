@@ -1,4 +1,4 @@
-import { MapData } from '../interfaces/mapData.interface';
+import { MapData } from '../../src-types/mapData';
 import { drawCanvas } from './drawMap.js';
 import { trianglesToRender } from './generateRenderInfo.js';
 import { setupControls } from './controls/viewerControls.js';

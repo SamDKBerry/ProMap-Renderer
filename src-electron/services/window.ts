@@ -7,6 +7,7 @@ export const createWindow = () => {
       preload: path.join(__dirname, '../preload.js'),
     },
     show: false,
+    autoHideMenuBar: true,
   });
   win.maximize();
   win.show();

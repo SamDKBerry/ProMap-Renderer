@@ -6,6 +6,8 @@ import { saveCanvasAsImage } from './fileSystem/saveImage';
 import { mapInfo } from './parseMap/parseInfo';
 import { mapData } from './parseMap/parseMap';
 import { updateCurrentMap, getCurrentMap } from './mapState';
+import { getMapSelectionState, updateMapSelectionState } from './mapSelectionState';
+import { MapListType } from '../../src-types/mapInfo';
 
 export const registerIPCMainHandlers = () => {
   ipcMain.handle('maps:findCommunityMaps', findCommunityMaps);
@@ -18,6 +20,12 @@ export const registerIPCMainHandlers = () => {
   ipcMain.handle('maps:mapInfo', async (_event, mapId: string) => {
     const data = await mapInfo(mapId);
     return data;
+  });
+  ipcMain.handle('maps:getMapSelectionType', async () => {
+    return getMapSelectionState();
+  });
+  ipcMain.handle('maps:updateMapSelectionType', async (_event, newSelectionType: MapListType) => {
+    updateMapSelectionState(newSelectionType);
   });
   ipcMain.handle('navigate:toMap', (_event, mapId: string) => {
     updateCurrentMap(mapId);

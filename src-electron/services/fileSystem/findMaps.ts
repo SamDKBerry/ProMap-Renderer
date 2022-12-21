@@ -9,7 +9,7 @@ export const findCommunityMaps = async () => {
 };
 
 export const findEditorMaps = async () => {
-  return getFilesRecursively(pathToEditorMaps).filter((file) => file.endsWith('.emap'));
+  return getFilesRecursively(pathToEditorMaps).filter((file) => file.endsWith('.map'));
 };
 
 const getDirectories = async (source: PathLike) =>
