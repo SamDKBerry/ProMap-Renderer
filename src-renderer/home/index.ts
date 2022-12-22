@@ -56,8 +56,8 @@ const addMapToList = ({ listElement, mapPath, imgSrc, title, author }: MapListIn
   const mapName = infoContainer.appendChild(document.createElement('span')) as HTMLSpanElement;
   mapName.textContent = title;
   mapName.classList.add('level-name');
-  const authorText = infoContainer.appendChild(document.createElement('span')) as HTMLSpanElement;
   if (author) {
+    const authorText = infoContainer.appendChild(document.createElement('span')) as HTMLSpanElement;
     authorText.textContent = author;
   }
 };
@@ -101,11 +101,11 @@ const updateSelectionType = async (newListType: MapListType) => {
   if (!mapContainerElement) {
     return;
   }
-  removeChilds(mapContainerElement);
+  removeChildren(mapContainerElement);
   renderPage();
 };
 
-const removeChilds = (parent: HTMLElement) => {
+const removeChildren = (parent: HTMLElement) => {
   while (parent.lastChild) {
     parent.removeChild(parent.lastChild);
   }
