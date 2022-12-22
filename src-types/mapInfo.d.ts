@@ -5,4 +5,12 @@ export interface MapInfo {
   userName: string;
 }
 
-export type MapListType = "custom" | "editor";
+export interface MapListInfo {
+  listElement: HTMLUListElement;
+  mapPath: string;
+  imgSrc: string;
+  title: string;
+  author?: string;
+}
+
+export type MapListType = 'custom' | 'editor';
