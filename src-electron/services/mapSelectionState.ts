@@ -1,6 +1,6 @@
 import { MapListType } from '../../src-types/mapInfo';
 
-let mapSelectionState = 'editor';
+let mapSelectionState = 'custom';
 
 export const updateMapSelectionState = (newListType: MapListType) => {
   mapSelectionState = newListType;

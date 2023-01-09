@@ -24,6 +24,7 @@ module.exports = {
       config: {
         name: 'electron_quick_start',
         setupIcon: path.join(__dirname, './assets/icons/icon.ico'),
+        iconUrl: path.join(__dirname, './assets/icons/icon.ico'),
       },
     },
   ],
