@@ -6,6 +6,6 @@ extends:
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 9
-  project: ./tsconfig.json
+  project: ./tsconfig.renderer.json
 plugins:
   - '@typescript-eslint'
