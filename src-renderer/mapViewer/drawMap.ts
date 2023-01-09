@@ -1,4 +1,4 @@
-import { RenderTriangle, MapRenderInfo, RenderConfig } from '../interfaces/mapRender.interface';
+import { MapRenderInfo, RenderConfig, RenderTriangle } from '../../src-types/mapRender';
 
 export const drawCanvas = (renderData: MapRenderInfo, renderConfig: RenderConfig) => {
   const width = Math.abs(renderData.bounds.minX - renderData.bounds.maxX) + renderConfig.border;

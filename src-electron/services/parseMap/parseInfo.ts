@@ -1,8 +1,8 @@
-import { pathToMaps } from '../fileSystem/paths';
+import { pathToCommunityMaps } from '../fileSystem/paths';
 import { asyncReadFile } from './readFile';
 
 export const mapInfo = async (mapId: string) => {
-  const absoluteFilePath = `${pathToMaps}/${mapId}/map.info`;
+  const absoluteFilePath = `${pathToCommunityMaps}/${mapId}/map.info`;
   const fileContent = await asyncReadFile(absoluteFilePath);
   return fileContentToMapInfo(fileContent);
 };

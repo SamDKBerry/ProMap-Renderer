@@ -1,4 +1,4 @@
-import { RenderConfig } from '../interfaces/mapRender.interface';
+import { RenderConfig } from '../../src-types/mapRender';
 
 export const renderConfigDefaults = {
   worldSpaceToPixelScale: 4,

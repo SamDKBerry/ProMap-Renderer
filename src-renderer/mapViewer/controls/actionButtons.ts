@@ -1,4 +1,5 @@
 import { refreshMap } from '../index.js';
+import { setupActionButton } from '../../utils/buttonSetup.js';
 
 export const setupActionButtons = () => {
   setupActionButton('backButton', 'click', () => window.electronAPI.navigateToHome());
@@ -11,15 +12,6 @@ export const setRefreshDirty = () => {
 
   if (refreshButton) {
     refreshButton.classList.add('stale');
-  }
-};
-
-const setupActionButton = (id: string, type: string, listener: () => void) => {
-  const actionButton = document.getElementById(id);
-  if (actionButton) {
-    actionButton.addEventListener(type, listener);
-  } else {
-    console.error(`Could not find action button with Id: ${id}`);
   }
 };
 

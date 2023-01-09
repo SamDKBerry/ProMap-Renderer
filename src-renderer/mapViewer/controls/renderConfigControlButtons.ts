@@ -1,4 +1,4 @@
-import { RenderConfig } from '../../interfaces/mapRender.interface';
+import { RenderConfig } from '../../../src-types/mapRender';
 import { renderConfig, updateEditedRenderConfig } from '../renderConfig.js';
 import { setRefreshDirty } from './actionButtons.js';
 

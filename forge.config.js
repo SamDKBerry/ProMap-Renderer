@@ -20,10 +20,11 @@ module.exports = {
   },
   makers: [
     {
-      name: '@electron-forge/maker-zip',
+      name: '@electron-forge/maker-squirrel',
       config: {
         name: 'electron_quick_start',
         setupIcon: path.join(__dirname, './assets/icons/icon.ico'),
+        iconUrl: path.join(__dirname, './assets/icons/icon.ico'),
       },
     },
   ],

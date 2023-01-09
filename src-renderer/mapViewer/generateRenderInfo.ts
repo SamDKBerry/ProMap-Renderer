@@ -1,10 +1,5 @@
-import { Brush, Face, MapData } from '../interfaces/mapData.interface';
-import {
-  Coordinate,
-  MapRenderInfo as MapRenderData,
-  RenderConfig,
-  RenderTriangle,
-} from '../interfaces/mapRender.interface';
+import { Brush, Face, MapData } from '../../src-types/mapData';
+import { Coordinate, MapRenderInfo as MapRenderData, RenderConfig, RenderTriangle } from '../../src-types/mapRender';
 
 export const trianglesToRender = (mapData: MapData, renderConfig: RenderConfig): MapRenderData => {
   const trisToRender: RenderTriangle[] = [];
