@@ -1,8 +1,8 @@
 # ProMap-Renderer
 
-ProMap-Renderer is a tool to visualise Prodeus levels in 2D. It turns Prodeus .map files into pretty top down layouts like the one below for the campaign level Corruption.
+ProMap-Renderer is a tool to visualise Prodeus levels in 2D. It turns Prodeus .map files into pretty top down layouts like the one below for the campaign levels Corruption and Atonement.
 
-![Corruption Layout](/readme-assets/corruption.jpg 'Corruption Layout')
+![Corruption Layout](/readme-assets/corruption.jpg 'Corruption Layout') ![Atonement Layout](/readme-assets/atonement.jpg 'Atonement Layout')
 
 ## How to install
 
