@@ -6,6 +6,7 @@ module.exports = {
     ignore: [
       'src-electron',
       'src-renderer',
+      'readme-assets',
       '.editorconfig',
       '.eslintignore',
       '.eslintrc.yml',
